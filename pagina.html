@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guia Definitivo de Análise de Dados - Lucas Garcia</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        header p {
+            font-size: 1.3em;
+            margin-bottom: 30px;
+            opacity: 0.95;
+        }
+
+        header {
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* imagem de fundo translúcida */
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            height: 100%;
+            background: url("assets/guia.png") no-repeat center;
+            background-size: 30%;
+            /* ou 'cover' se quiser preencher tudo */
+            opacity: 0.12;
+            /* ajuste a transparência */
+            z-index: 0;
+        }
+
+        /* mantém o texto acima da imagem */
+        header .container {
+            position: relative;
+            z-index: 1;
+        }
+
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #00d084 0%, #00a86b 100%);
+            color: white;
+            padding: 20px 50px;
+            font-size: 1.3em;
+            font-weight: bold;
+            text-decoration: none;
+            border-radius: 50px;
+            box-shadow: 0 10px 30px rgba(0, 208, 132, 0.4);
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            border: none;
+            cursor: pointer;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0, 208, 132, 0.6);
+        }
+
+        .hero-section {
+            background: white;
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        .hero-section h2 {
+            font-size: 2.2em;
+            color: #1a1a2e;
+            margin-bottom: 30px;
+        }
+
+        .story-section {
+            padding: 40px 20px;
+            background: #ebebed;
+        }
+
+        .story-content {
+            max-width: 800px;
+            margin: 0 auto;
+            font-size: 1.1em;
+            line-height: 1.8;
+        }
+
+        .story-content p {
+            margin-bottom: 20px;
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, #00d084 0%, #00ffc8 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .proof-section {
+            background: white;
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        .proof-section h2 {
+            font-size: 2em;
+            margin-bottom: 40px;
+            color: #1a1a2e;
+        }
+
+        .proof-images {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+        }
+
+        .proof-card {
+            background: #f9f9f9;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+        }
+
+        .proof-card h3 {
+            color: #00a86b;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .image-placeholder {
+            width: 100%;
+            height: 300px;
+            background: linear-gradient(135deg, #e0e0e0 0%, #f5f5f5 100%);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+            border: 3px dashed #ccc;
+            color: #666;
+            font-size: 1.1em;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .course-section {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: white;
+            padding: 60px 20px;
+        }
+
+        .course-section h2 {
+            text-align: center;
+            font-size: 2.2em;
+            margin-bottom: 50px;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .benefit-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 25px;
+            border-radius: 10px;
+            border-left: 5px solid #00d084;
+            transition: all 0.3s ease;
+        }
+
+        .benefit-item:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateX(10px);
+        }
+
+        .benefit-item h3 {
+            color: #00ffc8;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        .target-section {
+            background: white;
+            padding: 60px 20px;
+        }
+
+        .target-section h2 {
+            text-align: center;
+            font-size: 2em;
+            margin-bottom: 40px;
+            color: #1a1a2e;
+        }
+
+        .target-list {
+            max-width: 700px;
+            margin: 0 auto;
+            list-style: none;
+        }
+
+        .target-list li {
+            padding: 20px;
+            margin-bottom: 15px;
+            background: #f9f9f9;
+            border-radius: 10px;
+            border-left: 5px solid #00d084;
+            font-size: 1.1em;
+        }
+
+        .target-list li:before {
+            content: "✓ ";
+            color: #00d084;
+            font-weight: bold;
+            font-size: 1.3em;
+            margin-right: 10px;
+        }
+
+        .price-section {
+            background: linear-gradient(135deg, #00d084 0%, #00a86b 100%);
+            color: white;
+            padding: 80px 20px;
+            text-align: center;
+        }
+
+        .price-section h2 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        .price-box {
+            background: white;
+            color: #1a1a2e;
+            padding: 50px;
+            border-radius: 20px;
+            max-width: 600px;
+            margin: 30px auto;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.2);
+        }
+
+        .old-price {
+            text-decoration: line-through;
+            color: #999;
+            font-size: 1.5em;
+        }
+
+        .current-price {
+            font-size: 4em;
+            font-weight: bold;
+            color: #00a86b;
+            margin: 20px 0;
+        }
+
+        .current-price span {
+            font-size: 0.5em;
+        }
+
+        .guarantee {
+            background: #fff9e6;
+            padding: 30px;
+            border-radius: 10px;
+            margin: 40px 0;
+            border: 2px solid #ffd700;
+        }
+
+        .guarantee h3 {
+            color: #1a1a2e;
+            margin-bottom: 15px;
+        }
+
+        .testimonials {
+            background: #f9f9f9;
+            padding: 60px 20px;
+        }
+
+        .testimonials h2 {
+            text-align: center;
+            font-size: 2em;
+            margin-bottom: 40px;
+            color: #1a1a2e;
+        }
+
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .testimonial-card {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .testimonial-card p {
+            font-style: italic;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .testimonial-author {
+            font-weight: bold;
+            color: #00a86b;
+        }
+
+        .faq-section {
+            background: white;
+            padding: 60px 20px;
+        }
+
+        .faq-section h2 {
+            text-align: center;
+            font-size: 2em;
+            margin-bottom: 40px;
+            color: #1a1a2e;
+        }
+
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            background: #f9f9f9;
+            padding: 25px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            border-left: 5px solid #00d084;
+        }
+
+        .faq-item h3 {
+            color: #1a1a2e;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        .final-cta {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: white;
+            padding: 80px 20px;
+            text-align: center;
+        }
+
+        .final-cta h2 {
+            font-size: 2.5em;
+            margin-bottom: 30px;
+        }
+
+        .final-cta p {
+            font-size: 1.2em;
+            margin-bottom: 40px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .urgency {
+            background: #ff4444;
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: 1.2em;
+            margin: 30px 0;
+            animation: blink 2s infinite;
+        }
+
+        @keyframes blink {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.7;
+            }
+        }
+
+        footer {
+            background: #1a1a2e;
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            .current-price {
+                font-size: 3em;
+            }
+
+            .proof-images {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <h1>GUIA DEFINITIVO DE ANÁLISE DE DADOS</h1>
+            <p>Aprenda o que realmente funciona e mude sua vida com a profissão que mais cresce no Brasil — mesmo
+                começando do zero!</p>
+            <a href="https://pay.kiwify.com.br/ph4JhSA" class="cta-button">🚀 QUERO MUDAR MINHA VIDA AGORA</a>
+
+        </div>
+    </header>
+
+    <section class="hero-section">
+        <div class="container">
+            <h2>🚀 Transforme sua carreira com quem realmente vive de Análise de Dados</h2>
+        </div>
+    </section>
+
+    <section class="story-section">
+        <div class="container">
+            <div class="story-content">
+                <p><strong>Meu nome é Lucas Garcia</strong>, e há pouco tempo eu estava em uma realidade completamente
+                    diferente.</p>
+
+                <p>Já fui <strong>moto entregador, auxiliar de mecânico, moto uber</strong> e até <strong>lavei carros
+                        em lava jato</strong>.</p>
+
+                <p>Mas em menos de 1 ano, consegui fazer minha transição de carreira e me tornei <span
+                        class="highlight">Analista de Dados Sênior</span>, saindo de salários de <strong>R$ 1.200 para
+                        mais de R$ 12.000 por mês</strong>.</p>
+
+                <p>Hoje, meu propósito é te mostrar o <strong>caminho real, sem enrolação, sem teoria inútil</strong> —
+                    apenas o que realmente funciona.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="proof-section">
+        <div class="container">
+            <h2>📊 A Prova Real da Minha Transformação</h2>
+
+            <div class="proof-images">
+                <div class="proof-card">
+                    <h3>📋 Minha Carteira de Trabalho</h3>
+                    <img src="assets/carteira.jpg" alt="Carteira de Trabalho Digital - Lucas Garcia"
+                        style="width: 100%; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.2);">
+                    <p style="margin-top: 15px;">Da realidade de R$ 1.400/mês para R$ 7.286/mês - A prova real da
+                        transformação!</p>
+                </div>
+
+                <div class="proof-card">
+                    <h3>👨‍💼 Lucas Garcia</h3>
+                    <img src="assets/garcia.jpeg" alt="Lucas Garcia - Analista de Dados Sênior"
+                        style="width: 100%; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.2);">
+                    <p style="margin-top: 15px;">Analista de Dados Sênior e mentor de centenas de alunos em transição de
+                        carreira</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="course-section">
+        <div class="container">
+            <h2>📘 Apresentando: o Guia Completo de Análise de Dados</h2>
+
+            <p style="text-align: center; font-size: 1.2em; margin-bottom: 50px;">
+                Um curso <strong>100% prático, direto ao ponto</strong>, onde você vai aprender as habilidades mais
+                procuradas do mercado e entender como aplicar a Análise de Dados na sua realidade, mesmo que você nunca
+                tenha programado antes.
+            </p>
+
+            <p style="text-align: center; font-size: 1.15em; margin-bottom: 50px; color: #00ffc8;">
+                💡 <strong>Diferente dos "vendedores de curso"</strong> que só falam o que o ChatGPT já responde, aqui
+                você vai aprender como o mercado realmente funciona e como usar a Análise de Dados para conquistar
+                oportunidades reais.
+            </p>
+
+            <h3 style="text-align: center; font-size: 1.8em; margin-bottom: 30px;">💼 O que você vai aprender:</h3>
+
+            <div class="benefits-grid">
+                <div class="benefit-item">
+                    <h3>✅ Fundamentos Essenciais</h3>
+                    <p>Como entender o que é Análise de Dados e por que é uma das áreas mais valorizadas do momento</p>
+                </div>
+
+                <div class="benefit-item">
+                    <h3>✅ Ferramentas do Mercado</h3>
+                    <p>Os principais conceitos e ferramentas que o mercado exige (sem enrolação)</p>
+                </div>
+
+                <div class="benefit-item">
+                    <h3>✅ Portfólio do Zero</h3>
+                    <p>Estratégias para criar seus primeiros projetos e montar portfólio do zero</p>
+                </div>
+
+                <div class="benefit-item">
+                    <h3>✅ Transição Inteligente</h3>
+                    <p>Como usar sua experiência atual para se tornar analista na sua própria área de trabalho</p>
+                </div>
+
+                <div class="benefit-item">
+                    <h3>✅ Exemplos Práticos</h3>
+                    <p>— Se você trabalha no RH → Analista de RH<br>
+                        — Se trabalha em Estoque → Analista de Estoque<br>
+                        — Se trabalha com Vendas → Analista Comercial</p>
+                </div>
+
+                <div class="benefit-item">
+                    <h3>✅ Primeiro Emprego</h3>
+                    <p>Como conseguir o primeiro emprego como analista e evoluir rapidamente na carreira</p>
+                </div>
+
+                <div class="benefit-item">
+                    <h3>✅ Atalhos Comprovados</h3>
+                    <p>Dicas e atalhos que eu mesmo usei para sair do zero e chegar a cargos de alto nível em menos de 1
+                        ano</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="target-section">
+        <div class="container">
+            <h2>👇 Esse curso é pra você se...</h2>
+
+            <ul class="target-list">
+                <li>Quer mudar de vida, mas não sabe por onde começar</li>
+                <li>Já ouviu falar em análise de dados, mas acha que é "difícil demais"</li>
+                <li>Trabalha em uma empresa e quer crescer dentro dela, se destacando com dados</li>
+                <li>Cansou de cursos que prometem muito e entregam pouco</li>
+                <li>Quer aprender com alguém que realmente vive de análise de dados, e não só vende curso</li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="price-section" id="oferta">
+        <div class="container">
+            <h2>💰 Investimento Simbólico</h2>
+
+            <div class="price-box">
+                <p class="old-price">De R$ 197,00</p>
+                <p class="current-price"><span>R$</span> 19,99</p>
+                <p style="font-size: 1.2em; margin-bottom: 30px;">
+                    <strong>Isso mesmo.</strong><br>
+                    Por menos do que o preço de um lanche, você garante acesso ao curso completo, com o passo a passo
+                    que mudou a minha vida e pode mudar a sua também.
+                </p>
+                <p style="font-size: 1.1em; color: #666; margin-bottom: 30px;">
+                    🎯 Sem mensalidades, sem pegadinhas.<br>
+                    Apenas um único pagamento de R$ 19,99.
+                </p>
+
+                <a href="https://pay.kiwify.com.br/ph4JhSA" class="cta-button">GARANTIR MEU ACESSO POR R$ 19,99</a>
+            </div>
+
+            <div class="guarantee">
+                <h3>🔒 Acesso imediato + garantia total</h3>
+                <p>Assim que você fizer a inscrição, o acesso é liberado na hora pela Kiwify (plataforma 100% segura).
+                </p>
+                <p><strong>E se dentro de 7 dias você achar que o conteúdo não te ajudou, é só pedir reembolso — simples
+                        assim.</strong></p>
+                <p style="margin-top: 15px; font-weight: bold; color: #00a86b;">Você não tem nada a perder, mas pode
+                    ganhar uma nova carreira.</p>
+            </div>
+
+            <div class="urgency">
+                🕐 Promoção válida por tempo limitado - O preço pode subir a qualquer momento!
+            </div>
+        </div>
+    </section>
+
+    <section class="testimonials">
+        <div class="container">
+            <h2>💬 O que quem já assistiu está dizendo:</h2>
+
+            <div class="testimonial-grid">
+                <div class="testimonial-card">
+                    <p>"Lucas, você abriu minha mente. Eu achava que Análise de Dados era só pra quem fazia faculdade de
+                        TI. Agora estou aplicando dentro do meu trabalho no RH."</p>
+                    <p class="testimonial-author">— Mariana S., Campo Grande/MS</p>
+                </div>
+
+                <div class="testimonial-card">
+                    <p>"O melhor investimento que já fiz. Direto ao ponto, sem enrolação, realmente o que eu precisava
+                        pra começar."</p>
+                    <p class="testimonial-author">— André L.</p>
+                </div>
+
+                <div class="testimonial-card">
+                    <p>"Tô aplicando o que aprendi e já consegui uma promoção na empresa. Valeu demais!"</p>
+                    <p class="testimonial-author">— Gustavo P.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="faq-section">
+        <div class="container">
+            <h2>❓ Dúvidas Frequentes</h2>
+
+            <div class="faq-container">
+                <div class="faq-item">
+                    <h3>Preciso saber programação?</h3>
+                    <p>Não. O curso foi criado para iniciantes. Eu começo do zero e te mostro o caminho completo.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>Preciso de computador potente?</h3>
+                    <p>Não. Você pode começar até com um notebook básico ou até um celular para acompanhar as aulas
+                        iniciais.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>Consigo aplicar no meu trabalho atual?</h3>
+                    <p>Sim! O objetivo é justamente te ensinar a usar dados na sua própria área e crescer dentro dela.
+                    </p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>Tem certificado?</h3>
+                    <p>Sim, você recebe certificado de conclusão.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="final-cta">
+        <div class="container">
+            <h2>🧭 Do ponto A ao ponto B</h2>
+            <p>De onde você está até onde você quer chegar</p>
+
+            <p style="margin-top: 30px;">
+                Esse curso é mais do que aulas.<br>
+                É o <strong>atalho que eu gostaria de ter quando comecei</strong>.<br>
+                Você vai aprender o que realmente importa para entrar no mercado e crescer rápido — sem precisar gastar
+                anos estudando o que não gera resultado.
+            </p>
+
+            <h3 style="font-size: 2em; margin: 40px 0 20px;">🔥 Conclusão</h3>
+            <p>
+                Você pode continuar apenas "pensando" em mudar de vida,<br>
+                ou pode dar o primeiro passo hoje e aprender com quem já passou por tudo isso e conquistou resultado
+                real.
+            </p>
+
+            <p style="margin: 40px 0 30px; font-size: 1.3em; font-weight: bold;">
+                Clique abaixo e comece sua transformação agora.
+            </p>
+
+            <a href="https://pay.kiwify.com.br/ph4JhSA" class="cta-button">👉 GARANTIR MEU ACESSO POR R$ 19,99</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Lucas Garcia - Todos os direitos reservados</p>
+            <p style="margin-top: 10px; font-size: 0.9em;">Guia Definitivo de Análise de Dados</p>
+        </div>
+    </footer>
+</body>
+
+</html>
